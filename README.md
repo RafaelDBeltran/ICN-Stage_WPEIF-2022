@@ -6,10 +6,7 @@ ICN-stage é um arcabouço para orquestração de avaliações experimentais ICN
 
 ## Configurar ambiente
 
-1. Baixar repositótio
-```sh
-git clone https://github.com/RafaelDBeltran/ICN-Stage_WPEIF-2022.git
-```
+1. Baixar repositório e acessar diretório inicial do projeto
     
 2. Instalar softwares necessários
 - [Minikube](https://github.com/kubernetes/minikube)
@@ -37,7 +34,7 @@ python3 play_ndn.py
 
 1. Configurar o ambiente Kubernetes
 ```sh
-python3 setup_kubernets.py
+python3 setup_kubernetes.py
 ```
 
     Opções para Deploy do Ambiente
@@ -54,6 +51,7 @@ kubectl exec --stdin --tty director1 -- /bin/bash
 ```sh
 python3 icn-stage/cli.py
 ```
+![Resultados](/icn-stage/screenshot_icn-stage.png)
     
 ## Comandos do ICN-stage 
 Listar comandos
