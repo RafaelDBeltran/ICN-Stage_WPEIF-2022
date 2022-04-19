@@ -12,3 +12,4 @@ retry
 pandas
 pycryptodome
 ntplib
+kubernetes
