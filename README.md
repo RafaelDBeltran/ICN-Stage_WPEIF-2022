@@ -2,44 +2,47 @@
 
 ICN-stage é um arcabouço para orquestração de avaliações experimentais ICN reprodutiveis e tolerantes a falhas.
 
-# Baixar
+![Resultados](/results_paper/FIBRE_play_ndn_2022-04-19_00-12-36/2022-04-19_00-12-36_bar.png)
+
+## Configurar ambiente
+
+1. Baixar repositótio
 ```sh
 git clone https://github.com/RafaelDBeltran/ICN-Stage_WPEIF-2022.git
 ```
     
-# Instalar
+2. Instalar softwares necessários
 - [Minikube](https://github.com/kubernetes/minikube)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
 - [Python3](https://python.org.br/instalacao-linux/)
+- (Zookeeper não é necessário pois é instalado e configurado automaticamente)
 
-(Zookeeper não é necessário pois é instalado e configurado automaticamente)
-## Install Host Requirements
+3. Instalar dependências Python3
 ```sh
 pip install -r requirements.txt
 ```
 
-# Deploy
-0. Executar o minikube (ou configurar acesso a uma infraestrutura Kubernetes)
+4. Executar o minikube (ou configurar acesso a uma infraestrutura Kubernetes seguindo respectivo tutorial)
 ```sh
 minikube start
 ```
 
-# Reproduzir experimentos do artigo
+## Reproduzir experimentos do artigo
 ```sh
 python3 play_ndn.py
 ```
 
-# Executar novos experimentos
+
+## Executar novos experimentos
 
 1. Configurar o ambiente Kubernetes
 ```sh
 python3 setup_kubernets.py
 ```
 
-1.1 Opções para Deploy do Ambiente
-
-- -d: Número de diretores. default: 1
-- -a: Número de atores. default: 1
+    Opções para Deploy do Ambiente
+    - -d: Número de diretores. default: 1
+    - -a: Número de atores. default: 1
 
 
 2. Acessar algum diretor
@@ -65,7 +68,6 @@ Lista árvore do zookeeper
 ```sh
 icn-stage>> print
 ```
-### Experimento
 Realizar teste com cliente-servidor TCP
 Peça TCP
 ```sh
@@ -83,14 +85,14 @@ icn-stage>> traffic
 ```
 
 
-# Parar
+## Desligar ambiente
 
-Para parar todos os pods, execute:
+Parar todos os pods Kubernetes
 ```sh
 kubectl delete pod --all
 ```
 
-Desligar o minikube
+Desligar o Minikube
 ```sh
 minikube stop
 ```
