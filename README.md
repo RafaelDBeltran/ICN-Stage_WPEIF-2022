@@ -7,10 +7,13 @@ ICN-stage é uma plataforma aberta para orquestração e tolerância a falhas pa
 git clone https://github.com/RafaelDBeltran/ICN-Stage_WPEIF-2022.git
 ```
     
-# Install 
-Kubernetes
-Python
+# Install
+- [Minikube](https://github.com/kubernetes/minikube)
+- [lubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+- [Python3](https://python.org.br/instalacao-linux/)
+
 (Zookeeper não é necessário pois é instalado e configurado automaticamente)
+## Install Host Requirements
 ```sh
 pip install -r requirements.txt
 ```
@@ -43,7 +46,7 @@ kubectl exec --stdin --tty director1 -- /bin/bash
 python3 icn-stage/cli.py
 ```
     
-## Comandos no ICN-stage
+## ICN-stage Commands
 Listar comandos
 ```sh
 icn-stage>> help
@@ -56,7 +59,7 @@ Lista árvore do zookeeper
 ```sh
 icn-stage>> print
 ```
-### Peças
+### Plays
 Realizar teste com cliente-servidor TCP
 Peça TCP
 ```sh
@@ -73,8 +76,6 @@ Peça NDN
 icn-stage>> traffic
 ```
 Os logs podem ser observados no arquivo /tmp/daemon_director_ensemble_1.stderr do diretor principal.
-
-
 
 # Stop
 
