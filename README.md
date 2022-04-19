@@ -1,40 +1,46 @@
 # ICN-Stage
 
-ICN-stage é um arcabouço para orquestração e tolerância a falhas em avaliações experimentais de cenas ICN.
+ICN-stage é um arcabouço para orquestração de avaliações experimentais ICN reprodutiveis e tolerantes a falhas.
 
-# Download
-```sh
-git clone https://github.com/RafaelDBeltran/ICN-Stage_WPEIF-2022.git
-```
+![Resultados](/results_paper/FIBRE_play_ndn_2022-04-19_00-12-36/2022-04-19_00-12-36_bar.png)
+
+## Configurar ambiente
+
+1. Baixar repositório e acessar diretório inicial do projeto
     
-# Install
+2. Instalar softwares necessários
 - [Minikube](https://github.com/kubernetes/minikube)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
 - [Python3](https://python.org.br/instalacao-linux/)
+- (Zookeeper não é necessário pois é instalado e configurado automaticamente)
 
-(Zookeeper não é necessário pois é instalado e configurado automaticamente)
-## Install Host Requirements
+3. Instalar dependências Python3
 ```sh
 pip install -r requirements.txt
 ```
 
-# Deploy
-0. Executar o minikube 
+4. Executar o minikube (ou configurar acesso a uma infraestrutura Kubernetes seguindo respectivo tutorial)
 ```sh
 minikube start
 ```
 
-1. Configurar o ambiente Kubernetes
+## Reproduzir experimentos do artigo
 ```sh
-python3 setup_kubernets.py
+python3 play_ndn.py
 ```
 
-1.1 Opções para Deploy do Ambiente
 
-- -d: Número de diretores. default: 1
-- -a: Número de atores. default: 1
+## Executar novos experimentos
 
-# Run
+1. Configurar o ambiente Kubernetes
+```sh
+python3 setup_kubernetes.py
+```
+
+    Opções para Deploy do Ambiente
+    - -d: Número de diretores. default: 1
+    - -a: Número de atores. default: 1
+
 
 2. Acessar algum diretor
 ```sh
@@ -45,8 +51,9 @@ kubectl exec --stdin --tty director1 -- /bin/bash
 ```sh
 python3 icn-stage/cli.py
 ```
+![Resultados](/icn-stage/screenshot_icn-stage.png)
     
-## ICN-stage Commands
+## Comandos do ICN-stage 
 Listar comandos
 ```sh
 icn-stage>> help
@@ -59,7 +66,6 @@ Lista árvore do zookeeper
 ```sh
 icn-stage>> print
 ```
-### Plays
 Realizar teste com cliente-servidor TCP
 Peça TCP
 ```sh
@@ -70,21 +76,21 @@ Peça NDN
 ```sh
 icn-stage>> ndn
 ```
-Realizar teste com produtor e consumidor de trafego NDN
+Realizar avaliação com produtor e consumidor de trafego NDN
 Peça NDN
 ```sh
 icn-stage>> traffic
 ```
-Os logs podem ser observados no arquivo /tmp/daemon_director_ensemble_1.stderr do diretor principal.
 
-# Stop
 
-    Para parar todos os pods, execute:
-    ```sh
-    kubectl delete pod --all
-    ```
+## Desligar ambiente
 
-4. Desligar o minikube 
+Parar todos os pods Kubernetes
+```sh
+kubectl delete pod --all
+```
+
+Desligar o Minikube
 ```sh
 minikube stop
 ```
