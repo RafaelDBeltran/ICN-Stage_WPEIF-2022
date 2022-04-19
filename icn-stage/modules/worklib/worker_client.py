@@ -128,19 +128,6 @@ class Experiment(object):
 
 		return is_running
 
-	# def poll_based_is_running(self):
-	# 	logging.debug('\t\t\t #Checkpoint-EXP-4.1 popen: {}'.format(self.popen))
-	#
-	# 	if self.popen.poll() is None:
-	# 		logging.debug('\t\t Process ended. popen return code: {}'.format(self.popen.returncode))
-	# 		# process terminated
-	# 		self.ferr.close()
-	# 		self.fout.close()
-	# 		return False
-	#
-	# 	else:
-	# 		return True
-
 	def is_running(self):
 		logging.debug('\t\t\t #Checkpoint-EXP-5')
 
@@ -308,21 +295,10 @@ class WorkerClient(object):
 		logging.debug('\t\t\t Olha aqui 2.1: {}/start'.format(exp_obj.path))
 		exp_obj.run(wc)
 		logging.debug('\t\t\t Olha aqui 2.2: {}/Finalizou'.format(exp_obj.path))
-		#RDB-12/01/2022: Comentei o bloco abaixo, pois o experimento não estava sendo finalizado corretamente.
-		# @self.zk.DataWatch('%s/start' % exp_obj.path)
-		# def ready(data, stat):
-		# 	logging.debug('\t\t\t Olha aqui 2.2: {} _ {} _ {}'.format(data, stat, exp_obj))
-		# 	if stat:
-		# 		logging.debug('\t\t\t Olha aqui 2.3: Entrou no if')
-		# 		exp_obj.run(wc)
-		# 		logging.debug('\t\t\t Olha aqui 2.4: Passou pelo exp_obj')
-		# 		return False
 
 	def exp_finished(self, exp_obj):
 		logging.debug('\t\t\t #Checkpoint-WK-9')
 
-		# stdout = "experiments/{}/{}".format(exp_obj.name, exp_obj.stdout)
-		# stderr = "experiments/{}/{}".format(exp_obj.name, exp_obj.stderr)
 		code_output = exp_obj.popen.poll() if not exp_obj.is_snapshot else exp_obj.snapshot.poll
 		output = '(%i): ' % code_output
 		logging.debug(' code output: {}'.format(output))

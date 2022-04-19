@@ -83,20 +83,10 @@ class Ensemble:
                     channel.run("bash {}/opt/zookeeper/bin/zkServer.sh stop".format(self.DEFAULT_USER_PATH))
                     time.sleep(3)
                     channel.run("bash {}/opt/zookeeper/bin/zkServer.sh start".format(self.DEFAULT_USER_PATH))
-                    # time.sleep(15)
-                    # channel.run("bash /home/minion/icn-stage/modules/ensemble/ensemble.sh 2>err.log 1>out.log")
-                #channel.run("python3 daemon_ensemble.py --start ")
-                #channel.run("echo `pwd` > path.out ")
-
 
         for count,i in enumerate(data['Nodes']): 
 
             if sundry.get_ip_adapter(data['zookeeper_adapter']) == i['remote_hostname']:
-
-                # daemon_ensemble_instacnce = DirectorEnsembleDaemon(pidfile=pid_file, stdout=stdout, stderr=stderr)
-                # daemon_ensemble_instacnce.start()
-                # # subprocess.run("bash /home/minion/icn-stage/modules/ensemble/ensemble.sh 2>err.log 1>out.log")
-                #python3 /home/minion/icn-stage/daemon_ensemble.py --start
 
                 if (default_action == 'Active-old'):
                     subprocess.call(
@@ -118,8 +108,6 @@ class Ensemble:
                 elif (default_action == 'Active-new'):
                     channel.run(
                         "bash {}/icn-stage/python3 daemon_director_ensemble.py --start".format(ICN_STAGE_FOLDER))
-                #channel.run("python3 daemon_ensemble.py --start ")
-                #channel.run("echo `pwd` > path.out ")
 
 
 

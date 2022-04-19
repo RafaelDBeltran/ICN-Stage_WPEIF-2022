@@ -1,6 +1,6 @@
 # ICN-Stage
 
-ICN-stage é uma plataforma aberta para orquestração e tolerância a falhas para avaliação experimental de cenas ICN.
+ICN-stage é um arcabouço para orquestração e tolerância a falhas em avaliações experimentais de cenas ICN.
 
 # Download
 ```sh
@@ -9,7 +9,7 @@ git clone https://github.com/RafaelDBeltran/ICN-Stage_WPEIF-2022.git
     
 # Install
 - [Minikube](https://github.com/kubernetes/minikube)
-- [lubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
 - [Python3](https://python.org.br/instalacao-linux/)
 
 (Zookeeper não é necessário pois é instalado e configurado automaticamente)
@@ -24,9 +24,9 @@ pip install -r requirements.txt
 minikube start
 ```
 
-1. Configurar o ambiente kubernets
+1. Configurar o ambiente Kubernetes
 ```sh
-python3 setup_kubernets.py local
+python3 setup_kubernets.py
 ```
 
 1.1 Opções para Deploy do Ambiente

@@ -50,7 +50,6 @@ class Channel(object):
 		
 		self.path = "~/"
 		try:
-			#logging.debug('connect_y')
 			logging.debug("Channel hostname: {}  username: {}   password: {}   pkey: {}   timeout: {} ".format(
 				self.hostname,  self.username, self.password, self.pkey, self.timeout))
 
@@ -114,84 +113,22 @@ class Channel(object):
 
 	def _cmpfiles(self, local_path, remote_path):
 		stdout,_ = self.run("md5sum %s" % remote_path)
-		# logging.debug('putt 2.5.2 %s', stdout.read().decode('utf-8').split(' ', 1)[0])
-		# logging.debug('putt 2.5.2 %s', MD5(local_path))
-		# return stdout.read().split(" ")[0] != MD5(local_path)
 		return stdout.read().decode('utf-8').split(' ', 1)[0] != str(MD5(local_path))
 
 	def put(self, local_path, remote_path):
-		#logging.debug('putt start')
 		logging.debug("Channel.put(local_path={}, remote_path={})".format(local_path, remote_path))
 		local_path = local_path.replace('//','/')
 		remote_path = remote_path.replace('//','/')
 		if self.connected and os.path.isfile(local_path):
-			#logging.debug('putt 1')
 			if self.chkfile(self._actual_path(remote_path)):
-				#logging.debug('putt 2')
 				if self._cmpfiles(local_path, self._actual_path(remote_path)):
-					#logging.debug('putt 3')
 					self.scp.put(local_path,self._actual_path(remote_path))
-					#logging.debug('putt 4')
 					return True
 			else:
-				#logging.debug('putt 5')
 				self.scp.put(local_path,self._actual_path(remote_path))
-				#logging.debug('putt 6')
 				return True
-			#logging.debug('putt 7')
 		
 		return False
-
-	# def put(self, local_path, remote_path):
-	# 	#logging.debug('putt start')
-	# 	local_path = local_path.replace('//','/')
-	# 	remote_path = remote_path.replace('//','/')
-	# 	should_put = False
-	#
-	# 	logging.info(
-	# 		"************** connected: {}".format(self.connected))
-	# 	logging.info(
-	# 		"************** os.path.isfile(local_path): {}".format(os.path.isfile(local_path)))
-	#
-	# 	logging.info(
-	# 		"************** self.chkfile(self._actual_path(remote_path)): {}".format(self.chkfile(self._actual_path(remote_path))))
-	#
-	# 	logging.info(
-	# 		"**************self._cmpfiles(local_path, self._actual_path(remote_path)): {}".format(
-	# 			self._cmpfiles(local_path, self._actual_path(remote_path))))
-	# 	if self.connected and os.path.isfile(local_path):
-	# 		#logging.debug('putt 1')
-	# 		if self.chkfile(self._actual_path(remote_path)):
-	# 			#logging.debug('putt 2')
-	# 			if self._cmpfiles(local_path, self._actual_path(remote_path)):
-	# 				#logging.debug('putt 3')
-	# 				should_put = True
-	#
-	# 				#logging.debug('putt 4')
-	#
-	# 		else:
-	# 			should_put = True
-	# 			#logging.debug('putt 5')
-	#
-	# 			#logging.debug('putt 6')
-	# 			#return True
-	# 		#logging.debug('putt 7')
-	# 	logging.info("************** should_put: {} local_path: {} remote_path: {}".format(should_put, local_path, remote_path))
-	# 	if should_put:
-	# 		self.scp.put(local_path, self._actual_path(remote_path))
-	# 		logging.info("************** sending.. {} {} ".format(local_path, remote_path))
-	# 		for i in range(100):
-	# 			if self._cmpfiles(local_path, self._actual_path(remote_path)):
-	# 				logging.info("************** sleeping 0.1 ")
-	# 				sleep(0.1)
-	# 			else:
-	# 				logging.info("************** sleeping 0.1 ")
-	# 				break
-	# 	else:
-	# 		logging.info("************** NOT SENDING?!?! ")
-	# 		sys.exit(-1)
-	#
-	# 	return should_put
 
 
 	def get(self, remote_path, local_path):
@@ -206,11 +143,8 @@ class Channel(object):
 		return False
 
 	def get_full_path(self, remote_path, local_path):
-		#print("connected:%s self.chkfile(remote_path): %s " % (self.connected, self.chkfile(remote_path) ))
 		if self.connected and self.chkfile(remote_path):
-			#print(" os.path.isfile(local_path):%s " % ( os.path.isfile(local_path) ))
 			if os.path.isfile(local_path):
-				#print(" self._cmpfiles(local_path, remote_path):%s " % (self._cmpfiles(local_path, remote_path)))
 				if self._cmpfiles(local_path, self._actual_path(remote_path)):
 					self.scp.get(self._actual_path(remote_path),local_path)
 					return True

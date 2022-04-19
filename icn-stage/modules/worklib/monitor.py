@@ -10,11 +10,8 @@ class Monitor:
         
         self.PROCESS_SEARCH = PROCESS_SEARCH
         self.PATH = PATH
-        # self.UPDATE_TIME = UPDATE_TIME
-        # self.header_controller = False
    
     def __del__(self):
-        #print('Experiment file termined')
         pass
     
     def run_monitor(self):
@@ -48,7 +45,6 @@ class Monitor:
 
             df2 = df[df.PID == self.PROCESS_SEARCH]
 
-            # os.system("clear")
             df2.to_csv (self.PATH, header=False, mode='a+')
         
         except:
@@ -91,7 +87,6 @@ class Monitor:
             io_counters = process.io_counters()
             return io_counters.read_bytes, io_counters.write_bytes
         except psu.AccessDenied:
-            #print('Error on {}'.format(bytes_behavior.__name__))
             return 0, 0
 
     def get_threads(self, process):

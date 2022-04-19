@@ -78,17 +78,10 @@ class COMMANDS(object):
 class ControllerClient:
 	"""docstring for ControllerClient"""
 
-	# logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s\t%(message)s', datefmt="%Y-%m-%d %H:%M:%S",filename='daemon_controller.log', filemode='w')
-
-	#### SERVER CONFIGURATION METHODS
-	# rafael
-	# def __init__(self, zk_addr="127.0.0.1:2181"):
 	def __init__(self, zk_addr="127.0.0.1:2181"):
 		self.zk_addr = zk_addr
 		logging.debug("Instantiating kazoo using address: {}".format(self.zk_addr))
 		self.zk = kazoo.client.KazooClient(zk_addr, connection_retry=kazoo.retry.KazooRetry(max_tries=-1, max_delay=180))
-		# self.zk = kazoo.client.KazooClient(self.zk_addr,
-		# 								   connection_retry=kazoo.retry.KazooRetry(max_tries=2, max_delay=5))
 
 		logging.debug("Kazoo instantiated at address: {}".format(self.zk_addr))
 		try:
@@ -136,9 +129,7 @@ class ControllerClient:
 
 	def task_add(self, task_cmd, **task_args):
 		task_path = self.zk.create("%s/t" % (PATHS.TASKS), value=task_cmd.encode(), sequence=True)
-		# print "\t\t task_add task_path: ", task_path
 		for key in task_args:
-			# print "\t\t\t key : ", key, " value: ", task_args[key].encode()
 			self.zk.create("%s/%s" % (task_path, key), value=task_args[key].encode())
 
 		self.zk.create('%s/ready' % task_path)
@@ -320,36 +311,6 @@ class ControllerClient:
 	def worker_check(self, worker_hostname):
 		return self.zk.exists("%s/%s" % (PATHS.REGISTERED_WORKERS, worker_hostname))
 
-	# def worker_add_disconnected(self, worker_hostname, worker_status, is_failure=True):
-	# 	connection_path = "%s/%s" % (PATHS.DISCONNECTED_WORKERS, worker_hostname)
-	# 	self.zk.ensure_path(connection_path)
-	# 	worker_path = '%s/%s'%(PATHS.REGISTERED_WORKERS, worker_hostname)
-	# 	self.zk.ensure_path(worker_path)
-	#
-	# 	try:
-	# 		self.zk.create(connection_path, value=worker_path.encode(), makepath=True)
-	# 	except:
-	# 		print "cannot create connection_path: ", connection_path, " worker_path: ", worker_path, " worker_hostname: ", worker_hostname
-	#
-	# 	try:
-	# 		self.zk.create("%s/status" % connection_path, value=worker_status.encode())
-	# 		self.zk.set("%s/disconnection_time"%(worker_path), str(time.time()).encode())
-	#
-	# 	except:
-	# 		self.zk.set("%s/status" % connection_path, worker_status.encode())
-	#
-	# 	if is_failure:
-	# 		failures = 0
-	# 		try:
-	# 			failures = int(self.zk.get('%s/failures' % worker_path)[0])
-	# 		except:
-	# 			self.zk.ensure_path('%s/failures' % worker_path)
-	#
-	#
-	# 		self.zk.set('%s/failures' % worker_path, value=str(failures+1).encode())
-	#
-	# 	self.zk.set("%s/connection" % worker_path, connection_path.encode())
-
 	def worker_add_disconnected(self, worker_hostname, worker_status, is_failure=True):
 
 		connection_path = "%s/%s" % (PATHS.DISCONNECTED_WORKERS, worker_hostname)
@@ -381,10 +342,6 @@ class ControllerClient:
 			self.zk.set('%s/failures' % worker_path, value=str(failures + 1).encode())
 
 		logging.debug('node: %s/connection', worker_path)
-		#RM:Mansilha:TODO:FixME 2022-04-11 tentando evitar esta muleta
-		# logging.debug('Sleeping 10 secs...')
-		# time.sleep(10)
-		# logging.debug('Sleeping Done')
 		self.zk.set("%s/connection" % worker_path, connection_path.encode())
 		logging.debug('[CP6] DONE')
 
@@ -396,7 +353,7 @@ class ControllerClient:
 		logging.debug('worker_connection {}'.format(worker_connection))
 
 		worker_status = ''
-		# logging.debug('ERROR: CL['+str(type(worker_connection)) + str(worker_connection)+']')
+
 		if self.zk.exists(worker_connection) and worker_connection != '':
 
 			if 'free_workers' in worker_connection:
@@ -474,12 +431,8 @@ class ControllerClient:
 				logging.debug('WG[13.5] CL E {}'.format(type(i)))
 				var_aux = "%s/torun/%s/actor_path" % (worker_path, i)
 				var_aux = var_aux.split('/')[-1]
-				# var_aux = var_aux[0].split('/')[-1]
 				worker_aux = self.zk.get("%s/torun/%s/actor_path" % (worker_path, i))
 				worker_aux = worker_aux[0].decode('utf-8')
-				# logging.debug('[13]ERROR {}'.format(type(y[0])))
-				# logging.debug('[13]ERROR {}'.format(y[0]))
-				# worker_actors += [self.zk.get("%s/torun/%s/actor_path" % (worker_path,i))[0].split('/')[-1]]
 				worker_actors += [worker_aux.split('/')[-1]]
 				logging.debug('WG[14] CL ')
 
@@ -504,7 +457,6 @@ class ControllerClient:
 			logging.exception('[17]ERROR_Exception: {}'.format(e))
 
 	def worker_get_by_hostname(self, worker_hostname):
-		# logging.debug('ERROR: CL['+str(type(worker_hostname)) + str(worker_hostname)+']')
 		return self.worker_get("%s/%s" % (PATHS.REGISTERED_WORKERS, worker_hostname))
 
 	def worker_get_experiments(self, worker_hostname):
@@ -576,8 +528,6 @@ class ControllerClient:
 		logging.debug('workChose0')
 		workers_free_list = list(set(self.zk.get_children(PATHS.CONNECTED_FREE)) - set(alloc_list))
 		logging.debug('workChose0.5 {}'.format(self.zk.get_children(PATHS.CONNECTED_FREE)))
-		# logging.debug('workers_free_list %s', workers_free_list)
-		# logging.debug('PATHS.CONNECTED_FREE %s', PATHS.CONNECTED_FREE)
 		workers_chosen = []
 		try:
 

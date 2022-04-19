@@ -6,9 +6,6 @@
 import ast
 
 SCRIPT = "daemon_worker.py"
-# import logging
-
-# logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s\t%(message)s', datefmt="%Y-%m-%d %H:%M:%S",filename='daemon_controller.log', filemode='w')
 
 LOGGING_LEVEL = 100
 
@@ -43,8 +40,7 @@ class Worker(object):
 	@staticmethod
 	def decode(encoded_worker):
 		worker_dict = ast.literal_eval(encoded_worker)
-		# logging.debug(type(encoded_worker))
-		# logging.debug('Literal_Debug: ' + encoded_worker)
+
 		worker = Worker(worker_dict["hostname"],
 						worker_dict["username"],
 						path=worker_dict["path"],
@@ -92,6 +88,5 @@ class Worker(object):
 					"pkey": self.pkey,
 					"status": self.status})
 
-	# "pkey": "{}...{}".format(self.pkey[:10], self.pkey[-10:]),
 	def encode(self):
 		return str(self).encode()
