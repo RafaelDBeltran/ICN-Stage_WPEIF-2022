@@ -1,13 +1,13 @@
 # ICN-Stage
 
-ICN-stage é um arcabouço para orquestração e tolerância a falhas em avaliações experimentais de cenas ICN.
+ICN-stage é um arcabouço para orquestração de avaliações experimentais ICN reprodutiveis e tolerantes a falhas.
 
-# Download
+# Baixar
 ```sh
 git clone https://github.com/RafaelDBeltran/ICN-Stage_WPEIF-2022.git
 ```
     
-# Install
+# Instalar
 - [Minikube](https://github.com/kubernetes/minikube)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
 - [Python3](https://python.org.br/instalacao-linux/)
@@ -19,10 +19,17 @@ pip install -r requirements.txt
 ```
 
 # Deploy
-0. Executar o minikube 
+0. Executar o minikube (ou configurar acesso a uma infraestrutura Kubernetes)
 ```sh
 minikube start
 ```
+
+# Reproduzir experimentos do artigo
+```sh
+python3 play_ndn.py
+```
+
+# Executar novos experimentos
 
 1. Configurar o ambiente Kubernetes
 ```sh
@@ -34,7 +41,6 @@ python3 setup_kubernets.py
 - -d: Número de diretores. default: 1
 - -a: Número de atores. default: 1
 
-# Run
 
 2. Acessar algum diretor
 ```sh
@@ -46,7 +52,7 @@ kubectl exec --stdin --tty director1 -- /bin/bash
 python3 icn-stage/cli.py
 ```
     
-## ICN-stage Commands
+## Comandos do ICN-stage 
 Listar comandos
 ```sh
 icn-stage>> help
@@ -59,7 +65,7 @@ Lista árvore do zookeeper
 ```sh
 icn-stage>> print
 ```
-### Plays
+### Experimento
 Realizar teste com cliente-servidor TCP
 Peça TCP
 ```sh
@@ -70,21 +76,21 @@ Peça NDN
 ```sh
 icn-stage>> ndn
 ```
-Realizar teste com produtor e consumidor de trafego NDN
+Realizar avaliação com produtor e consumidor de trafego NDN
 Peça NDN
 ```sh
 icn-stage>> traffic
 ```
-Os logs podem ser observados no arquivo /tmp/daemon_director_ensemble_1.stderr do diretor principal.
 
-# Stop
 
-    Para parar todos os pods, execute:
-    ```sh
-    kubectl delete pod --all
-    ```
+# Parar
 
-4. Desligar o minikube 
+Para parar todos os pods, execute:
+```sh
+kubectl delete pod --all
+```
+
+Desligar o minikube
 ```sh
 minikube stop
 ```
