@@ -1,0 +1,53 @@
+{
+"zookeeper_adapter": "eth0",
+"actor": [
+	{
+	"remote_id"       : "1",
+	"remote_hostname" : "172.17.0.8",
+	"Function"        : "actor",
+	"remote_username" : "icn_user",
+	"remote_password" : "icn_user",
+	"remote_pkey_path": "/icn/keys/id_rsa"
+	},
+	{
+	"remote_id"       : "2",
+	"remote_hostname" : "172.17.0.9",
+	"Function"        : "actor",
+	"remote_username" : "icn_user",
+	"remote_password" : "icn_user",
+	"remote_pkey_path": "/icn/keys/id_rsa"
+	},
+	{
+	"remote_id"       : "3",
+	"remote_hostname" : "172.17.0.10",
+	"Function"        : "actor",
+	"remote_username" : "icn_user",
+	"remote_password" : "icn_user",
+	"remote_pkey_path": "/icn/keys/id_rsa"
+	}],
+"director": [
+	{
+	"remote_id"       : "1",
+	"remote_hostname" : "172.17.0.2",
+	"Function"        : "director",
+	"remote_username" : "icn_user",
+	"remote_password" : "icn_user",
+	"remote_pkey_path": "/icn/keys/id_rsa"
+	},
+	{
+	"remote_id"       : "2",
+	"remote_hostname" : "172.17.0.6",
+	"Function"        : "director",
+	"remote_username" : "icn_user",
+	"remote_password" : "icn_user",
+	"remote_pkey_path": "/icn/keys/id_rsa"
+	},
+	{
+	"remote_id"       : "3",
+	"remote_hostname" : "172.17.0.7",
+	"Function"        : "director",
+	"remote_username" : "icn_user",
+	"remote_password" : "icn_user",
+	"remote_pkey_path": "/icn/keys/id_rsa"
+	}]
+}
